@@ -1,0 +1,6 @@
+rootProject.name = 'devOps'
+include 'elasticsearch'
+include 'devOops'
+include 'docker'
+include 'redis'
+
