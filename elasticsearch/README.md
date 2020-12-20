@@ -23,3 +23,12 @@
 
 - [20201205](/docs/20201205.md)
 - [20201212](/docs/20201212.md)
+
+## ISSUE
+
+- Multi Node로 구성 중에 일어나는 이슈
+    - [세 노드 중 하나가 계속 up 되지 않는 오류](/issue/errlog/elastic-err.log)
+    - 원인
+        - docker-compose에 설정된 각 노드의 힙 사이즈가 512로 설정되어 있어 최소 1.5g가 필요한 상황
+        - docker desktop에서 resource memory를 확인해보니 2g 로 잡혀있어 메모리가 부족하여 노드 하나가 실행될 수 없었음
+    - 메모리를 세개의 노드가 모두 실행될 수 있는 사이즈로 수정
