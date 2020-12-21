@@ -11,7 +11,7 @@ services:
       - discovery.seed_hosts=es02,es03
       - cluster.initial_master_nodes=es01,es02,es03
       - bootstrap.memory_lock=true
-      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
     ulimits:
       memlock:
         soft: -1
@@ -31,7 +31,7 @@ services:
       - discovery.seed_hosts=es01,es03
       - cluster.initial_master_nodes=es01,es02,es03
       - bootstrap.memory_lock=true
-      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
     ulimits:
       memlock:
         soft: -1
@@ -49,7 +49,7 @@ services:
       - discovery.seed_hosts=es01,es02
       - cluster.initial_master_nodes=es01,es02,es03
       - bootstrap.memory_lock=true
-      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
     ulimits:
       memlock:
         soft: -1
@@ -67,14 +67,15 @@ services:
     container_name: kibana
     # 환경설정 키바나는 서비스 이름과 포트로 컨테이너 엘라스틱서치에 연결한다.
     environment:
-      - ES_JAVA_OPTS=-Xms512m -Xmx512m
       - ELASTICSEARCH_URL=http://es01:9200
       - ELASTICSEARCH_HOSTS=http://es01:9200
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
     # 키바나 기본 포트
     ports:
       - 5601:5601
     # 엘라스틱 서치 작동 후 키바나 서비스가 올라가도록 설정
     depends_on:
+      # 멀티노드 환경 시 모든 노드를 추가
       - es01
       - es02
       - es03
