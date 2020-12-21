@@ -6,11 +6,12 @@ services:
     container_name: es01
     environment:
       - node.name=es01
+      - node.master=true
       - cluster.name=es-docker-cluster
       - discovery.seed_hosts=es02,es03
       - cluster.initial_master_nodes=es01,es02,es03
       - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
     ulimits:
       memlock:
         soft: -1
@@ -30,7 +31,7 @@ services:
       - discovery.seed_hosts=es01,es03
       - cluster.initial_master_nodes=es01,es02,es03
       - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
     ulimits:
       memlock:
         soft: -1
@@ -48,7 +49,7 @@ services:
       - discovery.seed_hosts=es01,es02
       - cluster.initial_master_nodes=es01,es02,es03
       - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
     ulimits:
       memlock:
         soft: -1
@@ -58,12 +59,36 @@ services:
     networks:
       - elastic
 
+  kibana:
+    # 키바나 이미지로 엘라스틱 서치와 호환되는 동일한 버전을 사용
+    # https://www.docker.elastic.co/r/kibana
+    image: docker.elastic.co/kibana/kibana:7.9.3
+    # 키바나 컨테이너 명
+    container_name: kibana
+    # 환경설정 키바나는 서비스 이름과 포트로 컨테이너 엘라스틱서치에 연결한다.
+    environment:
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+      - ELASTICSEARCH_URL=http://es01:9200
+      - ELASTICSEARCH_HOSTS=http://es01:9200
+    # 키바나 기본 포트
+    ports:
+      - 5601:5601
+    # 엘라스틱 서치 작동 후 키바나 서비스가 올라가도록 설정
+    depends_on:
+      - es01
+      - es02
+      - es03
+    networks:
+      - elastic
+
 volumes:
   data01:
     driver: local
   data02:
     driver: local
   data03:
+    driver: local
+  kibana:
     driver: local
 
 networks:
