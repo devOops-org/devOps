@@ -31,16 +31,9 @@ subprojects {
     }
 
     dependencies {
-
-        testImplementation('org.springframework.boot:spring-boot-starter-test') {
-            exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-        }
+        testImplementation 'org.junit.jupiter:junit-jupiter:5.5.2'
+        testImplementation 'org.assertj:assertj-core:3.14.0'
     }
-
-    test {
-        useJUnitPlatform()
-    }
-
     clean {
         delete 'out'
     }
@@ -57,7 +50,19 @@ project(":docker") {
 
 /* 엘라스틱서치 정리 모듈 */
 project(":elasticsearch") {
-    dependencies {}
+    dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter'
+
+        /* httpClient 클래스 의존성 */
+        implementation 'org.apache.httpcomponents:httpclient:4.5.13'
+
+        testImplementation('org.springframework.boot:spring-boot-starter-test') {
+            exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+        }
+    }
+    test {
+        useJUnitPlatform()
+    }
 }
 
 /* 레디스 정리 모듈 */
