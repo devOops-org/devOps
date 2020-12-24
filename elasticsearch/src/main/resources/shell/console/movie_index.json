@@ -1,0 +1,23 @@
+{
+  "settings" : {
+    "number_of_shards" : 1,
+    "number_of_replicas" : 1
+  },
+  "mappings" : {
+    "_doc" : {
+      "properties" : {
+        "movieCd" : { "type" :  "integer" },
+        "movieNm" : { "type" :  "text" },
+        "movieNmEn" : { "type" :  "text" },
+        "prdtYear" : { "type" :  "integer" },
+        "openDt" : { "type" :  "date" },
+        "typeNm" : { "type" :  "keyword" },
+        "prdtStatNm" : { "type" :  "keyword" },
+        "nationAlt" : { "type" :  "keyword" },
+        "genreAlt" : { "type" :  "keyword" },
+        "repNationNrn" : { "type" :  "keyword" },
+        "repGenreNm" : { "type" :  "keyword" }
+      }
+    }
+  }
+}
