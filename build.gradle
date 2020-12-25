@@ -18,7 +18,7 @@ subprojects {
 
     group 'kr.seok'
     version '0.0.1-SNAPSHOT'
-    sourceCompatibility = '1.8'
+    sourceCompatibility = 1.8
 
     repositories {
         mavenCentral()
@@ -31,6 +31,13 @@ subprojects {
     }
 
     dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+        runtimeOnly 'com.h2database:h2'
+
+        compileOnly 'org.projectlombok:lombok'
+        annotationProcessor 'org.projectlombok:lombok'
+
         testImplementation 'org.junit.jupiter:junit-jupiter:5.5.2'
         testImplementation 'org.assertj:assertj-core:3.14.0'
     }
@@ -52,9 +59,15 @@ project(":docker") {
 project(":elasticsearch") {
     dependencies {
         implementation 'org.springframework.boot:spring-boot-starter'
+        implementation 'org.springframework.data:spring-data-elasticsearch'
 
         /* httpClient 클래스 의존성 */
         implementation 'org.apache.httpcomponents:httpclient:4.5.13'
+        implementation 'org.modelmapper.extensions:modelmapper-spring:1.1.0'
+
+        // https://mvnrepository.com/artifact/org.modelmapper.extensions/modelmapper-spring
+//        compile group: 'org.modelmapper.extensions', name: 'modelmapper-spring', version: '1.1.0'
+
 
         testImplementation('org.springframework.boot:spring-boot-starter-test') {
             exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'

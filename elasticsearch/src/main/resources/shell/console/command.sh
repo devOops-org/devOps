@@ -1,3 +1,6 @@
+# ElasticSearch curl Format
+#curl -X{메서드} http://host:port/{인덱스}/{타입}/{문서ID} -d '{json 데이터}'
+
 ### curl healthCheck
 #curl -XGET 'localhost:9200'
 
@@ -6,10 +9,66 @@
 #curl -XPUT 'localhost:9200/test_index?pretty=true'
 
 # 인덱스 정보(매핑 정보) 확인
-#curl -XGET 'localhost:9200/test_index/_mapping?pretty=true'
+#curl -XGET 'localhost:9200/test_index2/_mapping?pretty=true'
 
 # 인덱스 삭제
 #curl -X DELETE 'localhost:9200/test_index?pretty'
+
+# 인덱스 리스트 확인
+#curl -X GET 'localhost:9200/_cat/indices?v'
+
+# 인덱스 선 생성 후 매핑 추가
+#curl -X PUT 'localhost:9200/test_index2?pretty'
+#curl -H 'content-type:application/json' \
+#-X PUT 'localhost:9200/test_index2/_mapping?pretty' \
+#-d '
+#{
+#  "properties" : {
+#    "board_id" : { "type" : "integer" },
+#    "subject" : {
+#      "type" : "text",
+#      "fields" : {
+#        "keyword" : {
+#          "type" : "keyword",
+#          "ignore_above" : 256
+#        }
+#      }
+#    },
+#    "content" : {
+#      "type" : "text",
+#      "fields" : {
+#        "keyword" : {
+#          "type" : "keyword",
+#          "ignore_above" : 256
+#        }
+#      }
+#    },
+#    "created_at" : {
+#      "type" : "date",
+#      "format" : "yyyy-MM-dd HH:mm:ss"
+#    }
+#  }
+#}
+#'
+
+# 인덱스 설정 수정 API [인덱스 static / dynamic index settings 가 있음](https://www.elastic.co/guide/en/elasticsearch/reference/current/index-modules.html#index-modules-settings)
+#curl -X PUT "localhost:9200/test_index2/_settings?pretty" \
+#-H 'content-type:application/json' \
+#-d '
+#{
+#  "index" : {
+#    "number_of_replicas" : 2
+#  }
+#}
+#'
+
+# [매핑](https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-put-mapping.html)
+# PUT /{target}/_mapping
+# PUT /{target1},{target2}/_mapping
+
+# [매핑] 특정 인덱스의 특정 매핑 정보 확인하기
+#curl -X GET "http://localhost:9200/test_index2/_mapping/field/board_id?pretty"
+
 ################################################################################
 
 

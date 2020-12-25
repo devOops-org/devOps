@@ -1,0 +1,136 @@
+{
+  "mappings": {
+    "properties": {
+      "@timestamp": {
+        "type": "date"
+      },
+      "ORG_ID": {
+        "type": "keyword"
+      },
+      "ADDR": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+          }
+        }
+      },
+      "HOS_CATE": {
+        "type": "keyword"
+      },
+      "HOS_CATE_NM": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+          }
+        }
+      },
+      "FST_AID_MEDIC_INS_CD": {
+        "type": "keyword"
+      },
+      "FST_AID_MEDIC_INS_NM": {
+        "type": "keyword"
+      },
+      "ED_OPER_YN": {
+        "type": "keyword"
+      },
+      "ETC": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+          }
+        }
+      },
+      "OPER_DESC_DT": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+          }
+        }
+      },
+      "SIMPLE_MAP": {
+        "type": "keyword"
+      },
+      "OPER_NM": {
+        "type": "keyword"
+      },
+      "PHONE1": {
+        "type": "keyword"
+      },
+      "ED_PHONE": {
+        "type": "keyword"
+      },
+      "OPER_HOUR_MON_C": {
+        "type": "keyword"
+      },
+      "OPER_HOUR_TUE_C": {
+        "type": "keyword"
+      },
+      "OPER_HOUR_WED_C": {
+        "type": "keyword"
+      },
+      "OPER_HOUR_THU_C": {
+        "type": "keyword"
+      },
+      "OPER_HOUR_FRI_C": {
+        "type": "keyword"
+      },
+      "OPER_HOUR_SAT_C": {
+        "type": "keyword"
+      },
+      "OPER_HOUR_SUN_C": {
+        "type": "keyword"
+      },
+      "OPER_HOUR_HOL_C": {
+        "type": "keyword"
+      },
+      "OPER_HOUR_MON_S": {
+        "type": "keyword"
+      },
+      "OPER_HOUR_TUE_S": {
+        "type": "keyword"
+      },
+      "OPER_HOUR_WED_S": {
+        "type": "keyword"
+      },
+      "OPER_HOUR_THU_S": {
+        "type": "keyword"
+      },
+      "OPER_HOUR_FRI_S": {
+        "type": "keyword"
+      },
+      "OPER_HOUR_SAT_S": {
+        "type": "keyword"
+      },
+      "OPER_HOUR_SUN_S": {
+        "type": "keyword"
+      },
+      "OPER_HOUR_HOL_S": {
+        "type": "keyword"
+      },
+      "ZIP_CODE1": {
+        "type": "keyword"
+      },
+      "ZIP_CODE2": {
+        "type": "keyword"
+      },
+      "LONGITUDE": {
+        "type": "geo_point"
+      },
+      "LATITUDE": {
+        "type": "geo_point"
+      },
+      "DATE": {
+        "type": "date",
+        "format": "yyyy-MM-dd HH:mm:ss"
+      }
+    }
+  }
+}

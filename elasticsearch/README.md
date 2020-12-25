@@ -41,6 +41,12 @@
 - multi node 환경 구축 시 키바나는 어떻게 구성해야 하는지?
     - 하나의 키바나에 모든 노드를 추가하여 각 노드별로 데이터를 관리할 수 있게 하는건가?
 
+- reindex를 해야 하는 상황?
+
+## 참고 사이트
+- [curl 명령어 참고](https://www.lesstif.com/software-architect/curl-http-get-post-rest-api-14745703.html)
+- [Elastic 가이드북](https://esbook.kimjmin.net/)
+
 ## 참고도서
 - 엘라스틱 서치 실무 가이드
 - [x] 01. 검색 시스템 이해하기
