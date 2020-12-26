@@ -1,13 +1,10 @@
 {
   "mappings": {
     "properties": {
-      "@timestamp": {
-        "type": "date"
-      },
-      "ORG_ID": {
+      "org_id": {
         "type": "keyword"
       },
-      "ADDR": {
+      "addr": {
         "type": "text",
         "fields": {
           "keyword": {
@@ -16,10 +13,10 @@
           }
         }
       },
-      "HOS_CATE": {
+      "hos_cate": {
         "type": "keyword"
       },
-      "HOS_CATE_NM": {
+      "hos_cate_nm": {
         "type": "text",
         "fields": {
           "keyword": {
@@ -28,16 +25,16 @@
           }
         }
       },
-      "FST_AID_MEDIC_INS_CD": {
+      "fst_aid_medic_ins_cd": {
         "type": "keyword"
       },
-      "FST_AID_MEDIC_INS_NM": {
+      "fst_aid_medic_ins_nm": {
         "type": "keyword"
       },
-      "ED_OPER_YN": {
+      "ed_oper_yn": {
         "type": "keyword"
       },
-      "ETC": {
+      "etc": {
         "type": "text",
         "fields": {
           "keyword": {
@@ -46,7 +43,7 @@
           }
         }
       },
-      "OPER_DESC_DT": {
+      "oper_desc_dt": {
         "type": "text",
         "fields": {
           "keyword": {
@@ -55,81 +52,81 @@
           }
         }
       },
-      "SIMPLE_MAP": {
+      "simple_map": {
         "type": "keyword"
       },
-      "OPER_NM": {
+      "oper_nm": {
         "type": "keyword"
       },
-      "PHONE1": {
+      "phone1": {
         "type": "keyword"
       },
-      "ED_PHONE": {
+      "ed_phone": {
         "type": "keyword"
       },
-      "OPER_HOUR_MON_C": {
+      "oper_hour_mon_c": {
         "type": "keyword"
       },
-      "OPER_HOUR_TUE_C": {
+      "oper_hour_tue_c": {
         "type": "keyword"
       },
-      "OPER_HOUR_WED_C": {
+      "oper_hour_wed_c": {
         "type": "keyword"
       },
-      "OPER_HOUR_THU_C": {
+      "oper_hour_thu_c": {
         "type": "keyword"
       },
-      "OPER_HOUR_FRI_C": {
+      "oper_hour_fri_c": {
         "type": "keyword"
       },
-      "OPER_HOUR_SAT_C": {
+      "oper_hour_sat_c": {
         "type": "keyword"
       },
-      "OPER_HOUR_SUN_C": {
+      "oper_hour_sun_c": {
         "type": "keyword"
       },
-      "OPER_HOUR_HOL_C": {
+      "oper_hour_hol_c": {
         "type": "keyword"
       },
-      "OPER_HOUR_MON_S": {
+      "oper_hour_mon_s": {
         "type": "keyword"
       },
-      "OPER_HOUR_TUE_S": {
+      "oper_hour_tue_s": {
         "type": "keyword"
       },
-      "OPER_HOUR_WED_S": {
+      "oper_hour_wed_s": {
         "type": "keyword"
       },
-      "OPER_HOUR_THU_S": {
+      "oper_hour_thu_s": {
         "type": "keyword"
       },
-      "OPER_HOUR_FRI_S": {
+      "oper_hour_fri_s": {
         "type": "keyword"
       },
-      "OPER_HOUR_SAT_S": {
+      "oper_hour_sat_s": {
         "type": "keyword"
       },
-      "OPER_HOUR_SUN_S": {
+      "oper_hour_sun_s": {
         "type": "keyword"
       },
-      "OPER_HOUR_HOL_S": {
+      "oper_hour_hol_s": {
         "type": "keyword"
       },
-      "ZIP_CODE1": {
+      "zip_code1": {
         "type": "keyword"
       },
-      "ZIP_CODE2": {
+      "zip_code2": {
         "type": "keyword"
       },
-      "LONGITUDE": {
+      "longitude": {
         "type": "geo_point"
       },
-      "LATITUDE": {
+      "latitude": {
         "type": "geo_point"
       },
-      "DATE": {
+      "date": {
         "type": "date",
-        "format": "yyyy-MM-dd HH:mm:ss"
+        "format": "yyyy-MM-dd HH:mm:ss.S||yyyy/MM/dd||epoch_millis"
       }
     }
   }

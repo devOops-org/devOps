@@ -23,6 +23,7 @@
 
 - [20201205](/docs/20201205.md)
 - [20201212](/docs/20201212.md)
+- [20201226](/docs/20201226.md)
 
 ## ISSUE
 
@@ -41,7 +42,7 @@
 - multi node 환경 구축 시 키바나는 어떻게 구성해야 하는지?
     - 하나의 키바나에 모든 노드를 추가하여 각 노드별로 데이터를 관리할 수 있게 하는건가?
 
-- reindex를 해야 하는 상황?
+- [`reindex`를 해야 하는 상황?](/docs/learn/ReIndexAPI활용.md)
 
 ## 참고 사이트
 - [curl 명령어 참고](https://www.lesstif.com/software-architect/curl-http-get-post-rest-api-14745703.html)
@@ -62,8 +63,3 @@
 - [ ] 11. 장애 방지를 위한 실시간 모니터링
 - [ ] 12. 안정적인 클러스터 운영 노하우
 - [ ] 13. 클러스터 성능 측정
-    
-
-
-    
-

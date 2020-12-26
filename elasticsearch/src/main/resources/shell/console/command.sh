@@ -21,7 +21,7 @@
 #curl -X PUT 'localhost:9200/test_index2?pretty'
 #curl -H 'content-type:application/json' \
 #-X PUT 'localhost:9200/test_index2/_mapping?pretty' \
-#-d '
+#-d 'd
 #{
 #  "properties" : {
 #    "board_id" : { "type" : "integer" },
@@ -69,8 +69,11 @@
 # [매핑] 특정 인덱스의 특정 매핑 정보 확인하기
 #curl -X GET "http://localhost:9200/test_index2/_mapping/field/board_id?pretty"
 
-################################################################################
 
+# [INDEX] reIndex API
+# POST /_reindex
+
+################################################################################
 
 ################################################################################ Document API
 
@@ -93,10 +96,25 @@
 #-d @movie_document.json
 
 # Document 단건 조회
+#GET <index>/_doc/<_id>
+#HEAD <index>/_doc/<_id>
+#GET <index>/_source/<_id>
+#HEAD <index>/_source/<_id>
+
 #curl -XGET "http://localhost:9200/movie/_doc/1?pretty"
 
 # Document 단건 삭제
+# curl -X DELETE /<index>/_doc/<_id>
 #curl -XDELETE "http://localhost:9200/movie/_doc/1?pretty"
+
+# Document 단건 수정
+# curl -X POST /{index}/_update/<_id>
+
+
+# Document Bulk
+#POST /_bulk
+#POST /<target>/_bulk
+
 
 ################################################################################ Search API
 
@@ -119,3 +137,7 @@
 #    "term" : { "movieNm" : "살아남은"}
 #  }
 #}'
+
+# Multi Get API
+#GET /_mget
+#GET /<index>/_mget

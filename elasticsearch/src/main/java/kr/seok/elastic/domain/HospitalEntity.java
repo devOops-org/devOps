@@ -1,17 +1,25 @@
 package kr.seok.elastic.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
+import org.springframework.data.elasticsearch.annotations.DateFormat;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 @Data
 @Entity
 @Builder
-public class HospitalEntity {
+public class HospitalEntity implements Serializable {
     @Id @GeneratedValue
     @Column(name = "ORG_ID") /* 기관ID */
     private String id;
@@ -84,6 +92,12 @@ public class HospitalEntity {
     @Column(name = "LATITUDE") /* 병원위도 */
     private Double lat;
 
-    @Column(name = "DATE") /* 작업시간 */
+//    @Field(type = FieldType.Date, format = DateFormat.custom, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+//    @JsonProperty(value = "@timestamp")
+//    ZonedDateTime timestamp;
+
+//    @Field(type = FieldType.Date, format = DateFormat.custom, pattern = "yyyy-MM-dd HH:mm:ss")
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.S", timezone = "Asia/Seoul")
     private String date;
 }
