@@ -34,15 +34,17 @@
         - docker desktop에서 resource memory를 확인해보니 2g 로 잡혀있어 메모리가 부족하여 노드 하나가 실행될 수 없었음
     - 메모리를 세개의 노드가 모두 실행될 수 있는 사이즈로 수정
 
-- Kibana csv 파일 업로드
+- [Kibana csv 파일 업로드](https://www.elastic.co/kr/blog/importing-csv-and-log-data-into-elasticsearch-with-file-data-visualizer)
     - csv 파일 전체를 import 하는 방법 
         - kibana > machine learning > data visualizer 를 활용하여 업로드 가능
     - 엘라스틱 서치가 자동으로 필드에 대한 데이터 타입을 읽을 수도 있으나 권장사항은 아님
 
-- multi node 환경 구축 시 키바나는 어떻게 구성해야 하는지?
+- [multi node 환경 구축 시 키바나는 어떻게 구성해야 하는지?](https://www.elastic.co/guide/en/kibana/current/production.html#high-availability)
     - 하나의 키바나에 모든 노드를 추가하여 각 노드별로 데이터를 관리할 수 있게 하는건가?
 
 - [`reindex`를 해야 하는 상황?](/docs/learn/ReIndexAPI활용.md)
+
+- @timestamp, date 타입 값 저장하는 방법?
 
 ## 참고 사이트
 - [curl 명령어 참고](https://www.lesstif.com/software-architect/curl-http-get-post-rest-api-14745703.html)

@@ -1,25 +1,19 @@
 package kr.seok.elastic.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Builder;
-import lombok.Data;
-import org.springframework.data.elasticsearch.annotations.DateFormat;
-import org.springframework.data.elasticsearch.annotations.Field;
-import org.springframework.data.elasticsearch.annotations.FieldType;
+import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 
-@Data
 @Entity
+@Getter @Setter
 @Builder
+/* hashCode 로 Entity 구분 */
+@EqualsAndHashCode(of = {"id"})
+/* 엔티티는 public 또는 protected 로 설정, 리플렉션 같은 기술을 할 수 있도록 지원하기 위함 */
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class HospitalEntity implements Serializable {
+
     @Id @GeneratedValue
     @Column(name = "ORG_ID") /* 기관ID */
     private String id;
