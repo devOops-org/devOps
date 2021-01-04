@@ -77,6 +77,16 @@ project(":elasticsearch") {
     }
 }
 
+project(":es-rest-client") {
+    dependencies {
+        /* delete index 메서드는 여기에 있음 */
+        // https://mvnrepository.com/artifact/org.elasticsearch/elasticsearch
+        implementation 'org.elasticsearch:elasticsearch:6.4.3'
+
+        implementation 'org.elasticsearch.client:elasticsearch-rest-high-level-client:6.4.3'
+    }
+}
+
 project(":es-transport-client") {
     dependencies {
         // https://mvnrepository.com/artifact/org.elasticsearch/elasticsearch
@@ -84,9 +94,8 @@ project(":es-transport-client") {
 
         /* transport client */
         implementation 'org.elasticsearch.client:transport:6.4.3'
-        implementation 'org.elasticsearch.client:elasticsearch-rest-high-level-client:6.4.3'
 
-        implementation 'org.elasticsearch.plugin:transport-netty4-client:6.4.3'
+//        implementation 'org.elasticsearch.plugin:transport-netty4-client:6.4.3'
 
         testImplementation('org.springframework.boot:spring-boot-starter-test') {
             exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'

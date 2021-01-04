@@ -1,4 +1,4 @@
-package kr.seok.es.client.rest;
+package kr.seok.rest;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpHost;
@@ -21,7 +21,7 @@ import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
  * 	at org.elasticsearch.client.RestHighLevelClient.performRequestAsync(RestHighLevelClient.java:1302)
  * 	at org.elasticsearch.client.RestHighLevelClient.performRequestAsyncAndParseEntity(RestHighLevelClient.java:1284)
  * 	at org.elasticsearch.client.IndicesClient.createAsync(IndicesClient.java:190)
- * 	at kr.seok.es.client.rest.인덱스생성_ASYNC_REST.main(인덱스생성_ASYNC_REST.java:64)
+ * 	at kr.seok.rest.인덱스생성_ASYNC_REST.main(인덱스생성_ASYNC_REST.java:64)
  */
 @Slf4j
 public class 인덱스생성_ASYNC_REST {

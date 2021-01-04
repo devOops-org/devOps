@@ -1,4 +1,4 @@
-package kr.seok.es.client.trans;
+package kr.seok.trans;
 
 import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.client.transport.TransportClient;

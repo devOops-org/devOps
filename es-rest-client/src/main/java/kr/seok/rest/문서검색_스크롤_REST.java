@@ -1,19 +1,22 @@
-package kr.seok.es.client.rest;
+package kr.seok.rest;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpHost;
-import org.elasticsearch.action.search.SearchRequest;
-import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.action.search.SearchScrollRequest;
+import org.elasticsearch.action.search.*;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.unit.TimeValue;
+import org.elasticsearch.script.ScriptType;
+import org.elasticsearch.script.mustache.SearchTemplateRequest;
+import org.elasticsearch.script.mustache.SearchTemplateResponse;
 import org.elasticsearch.search.Scroll;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.elasticsearch.index.query.QueryBuilders.matchQuery;
 
@@ -90,7 +93,82 @@ public class 문서검색_스크롤_REST {
         client.close();
     }
 
+    /* scroll 방식 개선 */
+    public void scrollSearch2() throws IOException {
+        RestHighLevelClient client = new RestHighLevelClient(
+                RestClient.builder(
+                        new HttpHost("127.0.0.1", 9200, "http")));
+
+
+        String INDEX_NAME = "movie_auto_java";
+        String FIELD_NAME = "movieNm";
+        String QUERY_TEXT = "캡틴아메리카";
+
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        searchSourceBuilder.query(
+                matchQuery(FIELD_NAME, QUERY_TEXT));
+
+        SearchRequest searchRequest = new SearchRequest(INDEX_NAME);
+        searchRequest
+                .source(searchSourceBuilder)
+                .scroll(TimeValue.timeValueMinutes(1L));
+
+        SearchResponse searchResponse = client.search(searchRequest,RequestOptions.DEFAULT);
+        String scrollId = searchResponse.getScrollId();
+
+        ClearScrollRequest request = new ClearScrollRequest();
+        request.addScrollId(scrollId);
+
+        //scroll ID가 여러개일 경우는 setScrollIds를 사용하여 조회 가능
+        //request.setScrollIds(scrollIds);
+        ClearScrollResponse response = client.clearScroll(request, RequestOptions.DEFAULT);
+
+        //해당 scrollId가 정상적으로 release 되었는지 확인 가능
+        boolean success = response.isSucceeded();
+        int released = response.getNumFreed();
+
+        client.close();
+    }
+
+    /* 스크립트 기반 스크롤 요청 */
+    public void scrollSearch3() throws IOException {
+        RestHighLevelClient client = new RestHighLevelClient(
+                RestClient.builder(
+                        new HttpHost("127.0.0.1", 9200, "http")));
+
+        String INDEX_NAME = "movie_auto_java";
+        String FIELD_NAME = "movieNm";
+        String QUERY_TEXT = "캡틴아메리카";
+
+        SearchTemplateRequest searchRequest = new SearchTemplateRequest();
+        searchRequest.setRequest(new SearchRequest(INDEX_NAME));
+
+        searchRequest.setScriptType(ScriptType.INLINE);
+        searchRequest.setScript(
+                        "{"
+                        + "  \"query\": { \"match\" : { \"{{field}}\" : \"{{value}}\" } },"
+                        + "  \"size\" : \"{{size}}\""
+                        + "}"
+        );
+
+        Map<String, Object> scriptParams = new HashMap<>();
+        scriptParams.put("field", FIELD_NAME);
+        scriptParams.put("value", QUERY_TEXT);
+        scriptParams.put("size", 10);
+
+        searchRequest.setScriptParams(scriptParams);
+
+        SearchTemplateResponse searchTemplateResponse = client.searchTemplate(searchRequest, RequestOptions.DEFAULT);
+        SearchResponse response = searchTemplateResponse.getResponse();
+
+        if(response.status().getStatus() == 200) {
+            log.info("데이터 정상 호출");
+        }
+
+        client.close();
+    }
+
     public static void main(String[] args) throws IOException {
-        new 문서검색_스크롤_REST().scrollSearch();
+        new 문서검색_스크롤_REST().scrollSearch3();
     }
 }

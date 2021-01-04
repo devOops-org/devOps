@@ -1,4 +1,4 @@
-package kr.seok.es.client.rest;
+package kr.seok.rest;
 
 import org.apache.http.HttpHost;
 import org.elasticsearch.ElasticsearchException;
