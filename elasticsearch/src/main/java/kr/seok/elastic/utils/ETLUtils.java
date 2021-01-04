@@ -6,7 +6,6 @@ import kr.seok.elastic.domain.HospitalEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPut;
-import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
@@ -22,7 +21,7 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.apache.http.entity.ContentType.*;
+import static org.apache.http.entity.ContentType.APPLICATION_JSON;
 
 /**
  * CSV 데이터 추출 및 ES 적재

@@ -1,3 +1,4 @@
 rootProject.name = 'devOps'
 include 'elasticsearch', 'devOops', 'docker', 'redis'
+include 'es-transport-client'
 
