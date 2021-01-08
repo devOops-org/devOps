@@ -30,16 +30,23 @@ import static org.elasticsearch.index.query.QueryBuilders.matchQuery;
 @Slf4j
 public class 문서검색_스크롤_REST {
 
-    public void scrollSearch() throws IOException {
-        RestHighLevelClient client = new RestHighLevelClient(
+
+    /**
+     * Refactor Create RestHighLevelClient
+     * @return
+     */
+    private RestHighLevelClient getRestHighLevelClient() {
+        return new RestHighLevelClient(
                 RestClient.builder(
                         new HttpHost("127.0.0.1", 9200, "http")));
+    }
 
+    public void scrollSearch() throws IOException {
+        RestHighLevelClient client = getRestHighLevelClient();
 
         String INDEX_NAME = "movie_auto_java";
         String FIELD_NAME = "movieNm";
         String QUERY_TEXT = "캡틴아메리카";
-
 
         // 검색 쿼리 설정
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
@@ -93,11 +100,10 @@ public class 문서검색_스크롤_REST {
         client.close();
     }
 
+
     /* scroll 방식 개선 */
     public void scrollSearch2() throws IOException {
-        RestHighLevelClient client = new RestHighLevelClient(
-                RestClient.builder(
-                        new HttpHost("127.0.0.1", 9200, "http")));
+        RestHighLevelClient client = getRestHighLevelClient();
 
 
         String INDEX_NAME = "movie_auto_java";
@@ -132,9 +138,7 @@ public class 문서검색_스크롤_REST {
 
     /* 스크립트 기반 스크롤 요청 */
     public void scrollSearch3() throws IOException {
-        RestHighLevelClient client = new RestHighLevelClient(
-                RestClient.builder(
-                        new HttpHost("127.0.0.1", 9200, "http")));
+        RestHighLevelClient client = getRestHighLevelClient();
 
         String INDEX_NAME = "movie_auto_java";
         String FIELD_NAME = "movieNm";

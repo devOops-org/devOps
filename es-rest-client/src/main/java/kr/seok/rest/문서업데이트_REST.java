@@ -54,7 +54,7 @@ public class 문서업데이트_REST {
          *
          * 스크립트를 이용한 업데이트 방식
          */
-        UpdateRequest request1 = new UpdateRequest(INDEX_NAME, TYPE_NAME, _id);
+        UpdateRequest request1 = new UpdateRequest(INDEX_NAME, _id);
 
         Map<String, Object> parameters = singletonMap("count", 10);
         Script inline =
@@ -153,7 +153,7 @@ public class 문서업데이트_REST {
 
             밑에 설정한 upsertBuilder는 문서가 존재할 때만 적용됨
          */
-        IndexRequest indexRequest = new IndexRequest(INDEX_NAME, TYPE_NAME, _id)
+        IndexRequest indexRequest = new IndexRequest(INDEX_NAME).id(_id)
                 .source(jsonBuilder()
                         .startObject()
                             .field("movieCd", "20173732")

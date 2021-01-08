@@ -18,9 +18,7 @@ import java.util.Map;
 @Slf4j
 public class 문서조회_REST {
     public static void main(String[] args) throws IOException {
-        RestHighLevelClient client = new RestHighLevelClient(
-                RestClient.builder(
-                        new HttpHost("127.0.0.1", 9200, "http")));
+        RestHighLevelClient client = getRestHighLevelClient();
 
         // 인덱스명
         String INDEX_NAME = "movie_auto_java";
@@ -33,7 +31,7 @@ public class 문서조회_REST {
 
         // 요청
         GetRequest request =
-                new GetRequest(INDEX_NAME, TYPE_NAME, _id);
+                new GetRequest(INDEX_NAME, _id);
 
         // 응답
         GetResponse response = client.get(request, RequestOptions.DEFAULT);
@@ -52,5 +50,11 @@ public class 문서조회_REST {
         }
 
         client.close();
+    }
+
+    private static RestHighLevelClient getRestHighLevelClient() {
+        return new RestHighLevelClient(
+                RestClient.builder(
+                        new HttpHost("127.0.0.1", 9200, "http")));
     }
 }

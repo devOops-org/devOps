@@ -16,9 +16,7 @@ import java.io.IOException;
 @Slf4j
 public class 문서존재여부_REST {
     public static void main(String[] args) throws IOException {
-        RestHighLevelClient client = new RestHighLevelClient(
-                RestClient.builder(
-                        new HttpHost("127.0.0.1", 9200, "http")));
+        RestHighLevelClient client = getRestHighLevelClient();
 
         //인덱스 명
         String INDEX_NAME = "movie_auto_java";
@@ -29,7 +27,7 @@ public class 문서존재여부_REST {
         //문서 키값
         String _id = "1";
 
-        GetRequest getRequest = new GetRequest(INDEX_NAME, TYPE_NAME, _id);
+        GetRequest getRequest = new GetRequest(INDEX_NAME, _id);
         boolean exists = client.exists(getRequest, RequestOptions.DEFAULT);
         if (exists)
             log.info("문서가 존재합니다.");
@@ -37,5 +35,11 @@ public class 문서존재여부_REST {
             log.info("문서가 존재하지 않습니다.");
 
         client.close();
+    }
+
+    private static RestHighLevelClient getRestHighLevelClient() {
+        return new RestHighLevelClient(
+                RestClient.builder(
+                        new HttpHost("127.0.0.1", 9200, "http")));
     }
 }

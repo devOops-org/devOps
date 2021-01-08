@@ -30,7 +30,7 @@ public class 문서삭제_REST {
         //문서 키값
         String _id = "6";
 
-        DeleteRequest request = new DeleteRequest(INDEX_NAME, TYPE_NAME, _id);
+        DeleteRequest request = new DeleteRequest(INDEX_NAME, _id);
         DeleteResponse deleteResponse = client.delete(request, RequestOptions.DEFAULT);
 
         if(deleteResponse.status().getStatus() == 200) {

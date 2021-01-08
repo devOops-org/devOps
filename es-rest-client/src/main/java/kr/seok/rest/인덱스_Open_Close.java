@@ -1,13 +1,14 @@
 package kr.seok.rest;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpHost;
-import org.elasticsearch.action.admin.indices.close.CloseIndexRequest;
-import org.elasticsearch.action.admin.indices.close.CloseIndexResponse;
 import org.elasticsearch.action.admin.indices.open.OpenIndexRequest;
 import org.elasticsearch.action.admin.indices.open.OpenIndexResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.client.indices.CloseIndexRequest;
+import org.elasticsearch.client.indices.CloseIndexResponse;
 
 import java.io.IOException;
 
@@ -20,6 +21,7 @@ import java.io.IOException;
  * Open API를 사용하기 위해서는 client.indices().open() 메서드를 사용
  *
  */
+@Slf4j
 public class 인덱스_Open_Close {
     public static void main(String[] args) throws IOException {
         RestHighLevelClient client = new RestHighLevelClient(
@@ -27,7 +29,7 @@ public class 인덱스_Open_Close {
                         new HttpHost("127.0.0.1", 9200, "http")));
 
         // Index명
-        String INDEX_NAME = "moive_auto_alias";
+        String INDEX_NAME = "movie_auto_alias";
 
         // Index Close
         CloseIndexRequest requestClose = new CloseIndexRequest(INDEX_NAME);
@@ -37,6 +39,7 @@ public class 인덱스_Open_Close {
 
         boolean ackClose = closeIndexResponse.isAcknowledged();
 
+        if (ackClose) log.info(" 정상적으로 Close ");
         // Index Open
         OpenIndexRequest requestOpen = new OpenIndexRequest(INDEX_NAME);
 
@@ -45,6 +48,7 @@ public class 인덱스_Open_Close {
 
         boolean ackOpen = openIndexResponse.isAcknowledged();
 
+        if (ackOpen) log.info(" 정상적으로 Open ");
         client.close();
     }
 }

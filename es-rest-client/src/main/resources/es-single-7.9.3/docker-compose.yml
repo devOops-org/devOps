@@ -4,7 +4,7 @@ services:
   elasticsearch:
     # 엘라스틱 서치 도커 이미지 현재 버전 6.4.3
     # https://www.docker.elastic.co/r/elasticsearch
-    image: docker.elastic.co/elasticsearch/elasticsearch:6.4.3
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.9.3
     # 컨테이너 명
     container_name: elasticsearch
     # 환경설정 (SingleNode 모드, 자바 heap 설정)
@@ -24,7 +24,7 @@ services:
 #  kibana:
 #    # 키바나 이미지로 엘라스틱 서치와 호환되는 동일한 버전을 사용
 #    # https://www.docker.elastic.co/r/kibana
-#    image: docker.elastic.co/kibana/kibana:6.4.3
+#    image: docker.elastic.co/kibana/kibana:7.9.3
 #    # 키바나 컨테이너 명
 #    container_name: kibana
 #    # 환경설정 키바나는 서비스 이름과 포트로 컨테이너 엘라스틱서치에 연결한다.

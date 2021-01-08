@@ -36,10 +36,7 @@ import java.util.Map;
 @Slf4j
 public class 문서검색_REST {
     public static void main(String[] args) throws IOException {
-
-        RestHighLevelClient client = new RestHighLevelClient(
-                RestClient.builder(
-                        new HttpHost("127.0.0.1", 9200, "http")));
+        RestHighLevelClient client = getRestHighLevelClient();
 
         // 인덱스명
         String INDEX_NAME = "movie_auto_java";
@@ -63,7 +60,6 @@ public class 문서검색_REST {
 
         // 요청
         SearchRequest searchRequest = new SearchRequest(INDEX_NAME);
-        searchRequest.types(TYPE_NAME);
         searchRequest.source(searchSourceBuilder);
 
         // 응답
@@ -80,5 +76,11 @@ public class 문서검색_REST {
 
         client.close();
 
+    }
+
+    private static RestHighLevelClient getRestHighLevelClient() {
+        return new RestHighLevelClient(
+                RestClient.builder(
+                        new HttpHost("127.0.0.1", 9200, "http")));
     }
 }

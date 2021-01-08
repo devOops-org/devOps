@@ -20,10 +20,7 @@ import java.util.List;
  */
 public class 문서검색_다중조건_REST {
     public static void main(String[] args) throws IOException {
-
-        RestHighLevelClient client = new RestHighLevelClient(
-                RestClient.builder(
-                        new HttpHost("127.0.0.1", 9200, "http")));
+        RestHighLevelClient client = getRestHighLevelClient();
 
         String INDEX_NAME = "movie_search";
         String TYPE_NAME = "_doc";
@@ -69,5 +66,11 @@ public class 문서검색_다중조건_REST {
         }
 
         client.close();
+    }
+
+    private static RestHighLevelClient getRestHighLevelClient() {
+        return new RestHighLevelClient(
+                RestClient.builder(
+                        new HttpHost("127.0.0.1", 9200, "http")));
     }
 }

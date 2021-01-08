@@ -108,21 +108,27 @@ public class 클라이언트연결_TRANS {
     private static final String SINGLE_NODE_CLUSTER = "docker-cluster";
     private static final String MULTI_NODE_CLUSTER = "es-docker-cluster";
 
+    /**
+     * health check: curl -XGET 'localhost:9200/_cat/health?v&pretty'
+     * check indices: curl -XGET 'localhost:9200/_cat/indices?v&pretty'
+     *
+     */
     public static void main(String[] args) {
         /* 클러스터 정보 설정 클래스 Settings */
         Settings settings = Settings.builder()
                 .put("cluster.name", SINGLE_NODE_CLUSTER)
                 /* 스니핑 기능 */
-                .put("client.transport.sniff", true)
+//                .put("client.transport.sniff", true)
                 .build();
 
         try {
             /* Transport 클라이언트에는 새로운 노드를 자동적으로 추가하거 기존 노드를 삭제할 수 있는 클러스터 스니핑 기능이 내장되어 있다. */
-            TransportClient client = new PreBuiltTransportClient(Settings.EMPTY)
+            TransportClient client = new PreBuiltTransportClient(settings)
                     /* 스니필 기능이 활성화 되면 addTransportAddress 메서드를 호출해서 빌드된 노드 목록을 5초에 한 번씩 갱신해 최신 데이터로 관리해준다. */
                     .addTransportAddress(
                             new TransportAddress(
-                                    InetAddress.getByName("127.0.0.1"), 9200));
+                                    InetAddress.getByName("127.0.0.1"), 9300));
+
             client.close();
 
         } catch (UnknownHostException e) {

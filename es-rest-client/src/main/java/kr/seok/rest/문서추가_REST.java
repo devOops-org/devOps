@@ -1,5 +1,6 @@
 package kr.seok.rest;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpHost;
 import org.elasticsearch.ElasticsearchException;
 import org.elasticsearch.action.index.IndexRequest;
@@ -17,11 +18,10 @@ import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
  * ID를 이용해 문서 추가
  *
  */
+@Slf4j
 public class 문서추가_REST {
     public static void main(String[] args) throws IOException {
-        RestHighLevelClient client = new RestHighLevelClient(
-                RestClient.builder(
-                        new HttpHost("127.0.0.1", 9200, "http")));
+        RestHighLevelClient client = getRestHighLevelClient();
 
         // 인덱스 명
         String INDEX_NAME = "movie_auto_java";
@@ -30,11 +30,12 @@ public class 문서추가_REST {
         String TYPE_NAME="_doc";
 
         // 문서 키값
-        String _id = "2";
+        String _id = "1";
 
 
         // 데이터 추가
-        IndexRequest request = new IndexRequest(INDEX_NAME,TYPE_NAME,_id);
+        IndexRequest request = new IndexRequest(INDEX_NAME)
+                .id(_id);
 
         request.source(jsonBuilder()
                 .startObject()
@@ -48,7 +49,7 @@ public class 문서추가_REST {
         // 결과 조회
         try {
             IndexResponse response = client.index(request, RequestOptions.DEFAULT);
-
+            if(response.status().getStatus() == 201) log.info("정상 생성");
             /*ID 충돌로 인한 오류 발생 시 예외처리라고 되어 있는데 문서 내용이 변하기만 함 */
         } catch(ElasticsearchException e) {
             if (e.status() == RestStatus.CONFLICT) {
@@ -57,5 +58,11 @@ public class 문서추가_REST {
         }
 
         client.close();
+    }
+
+    private static RestHighLevelClient getRestHighLevelClient() {
+        return new RestHighLevelClient(
+                RestClient.builder(
+                        new HttpHost("127.0.0.1", 9200, "http")));
     }
 }

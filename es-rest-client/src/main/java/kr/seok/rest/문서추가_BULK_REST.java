@@ -25,10 +25,7 @@ import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
 @Slf4j
 public class 문서추가_BULK_REST {
     public void basicBulk() throws IOException {
-        RestHighLevelClient client = new RestHighLevelClient(
-                RestClient.builder(
-                        new HttpHost("127.0.0.1", 9200, "http")));
-
+        RestHighLevelClient client = getRestHighLevelClient();
 
         // 인덱스명
         String INDEX_NAME = "movie_auto_java";
@@ -44,43 +41,28 @@ public class 문서추가_BULK_REST {
         BulkRequest request = new BulkRequest();
 
         request
-                .add(new IndexRequest(INDEX_NAME, TYPE_NAME, "4")
+                .add(new IndexRequest(INDEX_NAME)
+                        .id("4")
                         .source(XContentType.JSON,FIELD_NAME, "살아남은 아이"));
 
         request
-                .add(new IndexRequest(INDEX_NAME, TYPE_NAME, "5")
+                .add(new IndexRequest(INDEX_NAME)
+                        .id("5")
                         .source(XContentType.JSON,FIELD_NAME, "프렌즈: 몬스터섬의비밀"));
 
         request
-                .add(new IndexRequest(INDEX_NAME, TYPE_NAME, "6")
+                .add(new IndexRequest(INDEX_NAME)
+                        .id("6")
                         .source(XContentType.JSON,FIELD_NAME, "캡틴아메리카 시빌워"));
 
-
         // 결과 조회
-        BulkResponse response = client.bulk(request,RequestOptions.DEFAULT);
-        for (BulkItemResponse bulkItemResponse : response) {
-
-            DocWriteResponse itemResponse = bulkItemResponse.getResponse();
-
-            if (bulkItemResponse.getOpType() == DocWriteRequest.OpType.INDEX
-                    || bulkItemResponse.getOpType() == DocWriteRequest.OpType.CREATE) {
-                IndexResponse indexResponse = (IndexResponse) itemResponse;
-
-            } else if (bulkItemResponse.getOpType() == DocWriteRequest.OpType.UPDATE) {
-                UpdateResponse updateResponse = (UpdateResponse) itemResponse;
-
-            } else if (bulkItemResponse.getOpType() == DocWriteRequest.OpType.DELETE) {
-                DeleteResponse deleteResponse = (DeleteResponse) itemResponse;
-            }
-        }
+        getBulkResponse(client, request);
 
         client.close();
     }
 
     public void customBulkMerge() throws IOException {
-        RestHighLevelClient client = new RestHighLevelClient(
-                RestClient.builder(
-                        new HttpHost("127.0.0.1", 9200, "http")));
+        RestHighLevelClient client = getRestHighLevelClient();
 
 
         // 인덱스명
@@ -97,7 +79,7 @@ public class 문서추가_BULK_REST {
         BulkRequest request = new BulkRequest();
 
         request
-                .add(getMergeRequest(INDEX_NAME, TYPE_NAME, "4", jsonBuilder()
+                .add(getMergeRequest(INDEX_NAME, "4", jsonBuilder()
                         .startObject()
                         .field("movieCd", "20173732")
                         .field("movieNm", "살아남은 아이")
@@ -107,7 +89,7 @@ public class 문서추가_BULK_REST {
                         .endObject()));
 
         request
-                .add(getMergeRequest(INDEX_NAME, TYPE_NAME, "5", jsonBuilder()
+                .add(getMergeRequest(INDEX_NAME, "5", jsonBuilder()
                         .startObject()
                         .field("movieCd", "20173732")
                         .field("movieNm", "프렌즈: 몬스터섬의비밀")
@@ -117,7 +99,7 @@ public class 문서추가_BULK_REST {
                         .endObject()));
 
         request
-                .add(getMergeRequest(INDEX_NAME, TYPE_NAME, "6", jsonBuilder()
+                .add(getMergeRequest(INDEX_NAME, "6", jsonBuilder()
                         .startObject()
                         .field("movieCd", "20173732")
                         .field("movieNm", "캡틴아메리카 시빌워")
@@ -127,46 +109,55 @@ public class 문서추가_BULK_REST {
                         .endObject()));
 
         // 결과 조회
-        BulkResponse response = client.bulk(request, RequestOptions.DEFAULT);
-        for (BulkItemResponse bulkItemResponse : response) {
-
-            DocWriteResponse itemResponse = bulkItemResponse.getResponse();
-
-            if (bulkItemResponse.getOpType() == DocWriteRequest.OpType.INDEX
-                    || bulkItemResponse.getOpType() == DocWriteRequest.OpType.CREATE) {
-                IndexResponse indexResponse = (IndexResponse) itemResponse;
-
-                if(indexResponse.status().getStatus() >= 200) {
-                    log.info("문서 생성");
-                }
-
-            } else if (bulkItemResponse.getOpType() == DocWriteRequest.OpType.UPDATE) {
-                UpdateResponse updateResponse = (UpdateResponse) itemResponse;
-
-                if(updateResponse.status().getStatus() >= 200) {
-                    log.info("문서 수정");
-                }
-            } else if (bulkItemResponse.getOpType() == DocWriteRequest.OpType.DELETE) {
-                DeleteResponse deleteResponse = (DeleteResponse) itemResponse;
-
-                if(deleteResponse.status().getStatus() == 200) {
-                    log.info("문서 삭제");
-                }
-            }
-        }
+        getBulkResponse(client, request);
 
         client.close();
+    }
+
+    private RestHighLevelClient getRestHighLevelClient() {
+        return new RestHighLevelClient(
+                RestClient.builder(
+                        new HttpHost("127.0.0.1", 9200, "http")));
+    }
+
+    private void getBulkResponse(RestHighLevelClient client, BulkRequest request) throws IOException {
+        BulkResponse bulkResponse = client.bulk(request, RequestOptions.DEFAULT);
+        for (BulkItemResponse bulkItemResponse : bulkResponse) {
+            DocWriteResponse itemResponse = bulkItemResponse.getResponse();
+            switch (bulkItemResponse.getOpType()) {
+                case INDEX:
+
+                case CREATE:
+                    IndexResponse indexResponse = (IndexResponse) itemResponse;
+                    if (indexResponse.status().getStatus() >= 200) {
+                        log.info("문서 생성");
+                    }
+                    break;
+                case UPDATE:
+                    UpdateResponse updateResponse = (UpdateResponse) itemResponse;
+                    if (updateResponse.status().getStatus() >= 200) {
+                        log.info("문서 수정");
+                    }
+                    break;
+                case DELETE:
+                    DeleteResponse deleteResponse = (DeleteResponse) itemResponse;
+                    if (deleteResponse.status().getStatus() == 200) {
+                        log.info("문서 삭제");
+                    }
+            }
+        }
     }
 
     /*
         기존 데이터를 bulk 업데이트 한다고 했을 때, 값이 있으면 수정, 없으면 생성 할 수 있도록 하는 방법? 이 아닐까
         없는 건 새로 생성되서 편해 보이긴 하는데 수정되는 경우에서 기존에 있는 데이터가 필요없는데 그대로 존재할 수 있는 문제가 있음
     */
-    private UpdateRequest getMergeRequest(String INDEX_NAME, String TYPE_NAME, String id, XContentBuilder jsonData) {
+    private UpdateRequest getMergeRequest(String INDEX_NAME, String id, XContentBuilder jsonData) {
         IndexRequest indexRequest =
-                new IndexRequest(INDEX_NAME, TYPE_NAME, id)
+                new IndexRequest(INDEX_NAME)
+                        .id(id)
                         .source(jsonData);
-        return new UpdateRequest(INDEX_NAME, TYPE_NAME, id)
+        return new UpdateRequest(INDEX_NAME, id)
                 .doc(jsonData)
                 .upsert(indexRequest);
     }

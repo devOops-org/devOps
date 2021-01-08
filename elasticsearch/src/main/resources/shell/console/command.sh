@@ -3,6 +3,8 @@
 
 ### curl healthCheck
 #curl -XGET 'localhost:9200'
+#curl -XGET 'localhost:9200/_cat/health?v&pretty'
+#curl -XGET 'localhost:9200/_cat/indices?v&pretty'
 
 ################################################################################ Index API
 # 인덱스 생성
