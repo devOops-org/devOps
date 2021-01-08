@@ -1,0 +1,90 @@
+{
+  "mappings": {
+    "properties": {
+      "org_id": { "type": "keyword" },
+      "addr": { "type": "keyword" },
+      "hos_cate": { "type": "keyword" },
+      "hos_cate_nm": { "type": "keyword" },
+      "fst_aid_medic_ins_cd": { "type": "keyword" },
+      "fst_aid_medic_ins_nm": { "type": "keyword" },
+      "ed_oper_yn": { "type": "keyword" },
+      "etc": { "type": "keyword" },
+      "oper_desc_dt": { "type": "keyword" },
+      "simple_map": {
+        "type": "keyword"
+      },
+      "oper_nm": {
+        "type": "keyword"
+      },
+      "phone1": {
+        "type": "keyword"
+      },
+      "ed_phone": {
+        "type": "keyword"
+      },
+      "oper_hour_mon_c": {
+        "type": "keyword"
+      },
+      "oper_hour_tue_c": {
+        "type": "keyword"
+      },
+      "oper_hour_wed_c": {
+        "type": "keyword"
+      },
+      "oper_hour_thu_c": {
+        "type": "keyword"
+      },
+      "oper_hour_fri_c": {
+        "type": "keyword"
+      },
+      "oper_hour_sat_c": {
+        "type": "keyword"
+      },
+      "oper_hour_sun_c": {
+        "type": "keyword"
+      },
+      "oper_hour_hol_c": {
+        "type": "keyword"
+      },
+      "oper_hour_mon_s": {
+        "type": "keyword"
+      },
+      "oper_hour_tue_s": {
+        "type": "keyword"
+      },
+      "oper_hour_wed_s": {
+        "type": "keyword"
+      },
+      "oper_hour_thu_s": {
+        "type": "keyword"
+      },
+      "oper_hour_fri_s": {
+        "type": "keyword"
+      },
+      "oper_hour_sat_s": {
+        "type": "keyword"
+      },
+      "oper_hour_sun_s": {
+        "type": "keyword"
+      },
+      "oper_hour_hol_s": {
+        "type": "keyword"
+      },
+      "zip_code1": {
+        "type": "keyword"
+      },
+      "zip_code2": {
+        "type": "keyword"
+      },
+      "longitude": {
+        "type": "double"
+      },
+      "latitude": {
+        "type": "double"
+      },
+      "date": {
+        "type": "date", "format": "yyyy-MM-dd HH:mm:ss.S"
+      }
+    }
+  }
+}

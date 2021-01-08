@@ -7,7 +7,6 @@ import java.io.Serializable;
 
 @Entity
 @Getter @Setter
-@Builder
 /* hashCode 로 Entity 구분 */
 @EqualsAndHashCode(of = {"id"})
 /* 엔티티는 public 또는 protected 로 설정, 리플렉션 같은 기술을 할 수 있도록 지원하기 위함 */
@@ -17,6 +16,8 @@ public class HospitalEntity implements Serializable {
     @Id @GeneratedValue
     @Column(name = "ORG_ID") /* 기관ID */
     private String id;
+    @Transient
+    private String orgId;
     @Column(name = "ADDRESS") /* 주소 */
     private String addr;
     @Column(name = "HOS_CATE") /* 병원분류 */
@@ -94,4 +95,43 @@ public class HospitalEntity implements Serializable {
 //    @Field(type = FieldType.Date, format = DateFormat.custom, pattern = "yyyy-MM-dd HH:mm:ss")
 //    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.S", timezone = "Asia/Seoul")
     private String date;
+
+    @Builder
+    public HospitalEntity(String id, String orgId, String addr, String hosCate, String hosCateNm, String fstAidMedicInsCd, String fstAidMedicInsNm, String edOperYn, String etc, String operDescDt, String simpleMap, String operNm, String phone1, String edPhone, String operHourMonC, String operHourTueC, String operHourWedC, String operHourThuC, String operHourFriC, String operHourSatC, String operHourSunC, String operHourHolC, String operHourMonS, String operHourTueS, String operHourWedS, String operHourThuS, String operHourFriS, String operHourSatS, String operHourSunS, String operHourHolS, String zipCode1, String zipCode2, Double lon, Double lat, String date) {
+        this.id = id;
+        this.orgId = orgId;
+        this.addr = addr;
+        this.hosCate = hosCate;
+        this.hosCateNm = hosCateNm;
+        this.fstAidMedicInsCd = fstAidMedicInsCd;
+        this.fstAidMedicInsNm = fstAidMedicInsNm;
+        this.edOperYn = edOperYn;
+        this.etc = etc;
+        this.operDescDt = operDescDt;
+        this.simpleMap = simpleMap;
+        this.operNm = operNm;
+        this.phone1 = phone1;
+        this.edPhone = edPhone;
+        this.operHourMonC = operHourMonC;
+        this.operHourTueC = operHourTueC;
+        this.operHourWedC = operHourWedC;
+        this.operHourThuC = operHourThuC;
+        this.operHourFriC = operHourFriC;
+        this.operHourSatC = operHourSatC;
+        this.operHourSunC = operHourSunC;
+        this.operHourHolC = operHourHolC;
+        this.operHourMonS = operHourMonS;
+        this.operHourTueS = operHourTueS;
+        this.operHourWedS = operHourWedS;
+        this.operHourThuS = operHourThuS;
+        this.operHourFriS = operHourFriS;
+        this.operHourSatS = operHourSatS;
+        this.operHourSunS = operHourSunS;
+        this.operHourHolS = operHourHolS;
+        this.zipCode1 = zipCode1;
+        this.zipCode2 = zipCode2;
+        this.lon = lon;
+        this.lat = lat;
+        this.date = date;
+    }
 }

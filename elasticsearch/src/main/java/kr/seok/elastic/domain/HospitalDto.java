@@ -9,6 +9,7 @@ public class HospitalDto {
     public static HospitalEntity toEntity(String... split) {
         return HospitalEntity.builder()
                 .id(split[0])
+                .orgId(split[0])
                 .addr(split[1])
                 .hosCate(split[2])
                 .hosCateNm(split[3])

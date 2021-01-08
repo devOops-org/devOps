@@ -108,6 +108,9 @@ public class ETLUtils {
             httpPut.setHeader("content-type", APPLICATION_JSON.toString());
 
             CloseableHttpResponse response = client.execute(httpPut);
+            if(response.getStatusLine().getStatusCode() == 400) {
+                throw new IllegalArgumentException("에러");
+            }
             log.info("[LOG] [응답 값] [{}]", response);
 
             client.close();

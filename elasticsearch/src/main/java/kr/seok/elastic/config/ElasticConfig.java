@@ -1,15 +1,21 @@
 package kr.seok.elastic.config;
 
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.common.transport.TransportAddress;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.elasticsearch.client.ClientConfiguration;
 import org.springframework.data.elasticsearch.client.RestClients;
+import org.springframework.data.elasticsearch.config.AbstractElasticsearchConfiguration;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
 
 @Configuration
 @EnableElasticsearchRepositories(
@@ -18,7 +24,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaRepositories(
         basePackages = "kr.seok.elastic.repository.jpa"
 )
-public class ElasticConfig {
+public class ElasticConfig extends AbstractElasticsearchConfiguration {
 
     @Value("${elasticsearch.host}")
     private String esHost;
@@ -29,21 +35,24 @@ public class ElasticConfig {
     @Value("${elasticsearch.clustername")
     private String clusterName;
 
+    @Override
     @Bean
-    public RestHighLevelClient client() {
-        ClientConfiguration clientConfiguration =
+    public RestHighLevelClient elasticsearchClient() {
+        final ClientConfiguration clientConfiguration =
                 ClientConfiguration.builder()
-                        .connectedTo(
-                                "localhost:9200"
-                                //new HttpHost(esHost, esPort).toHostString()
-                        )
+                        .connectedTo(new InetSocketAddress(esHost, esPort))
                         .build();
-
         return RestClients.create(clientConfiguration).rest();
     }
 
-    @Bean
-    public ElasticsearchOperations elasticsearchTemplate() {
-        return new ElasticsearchRestTemplate(client());
+//    @Bean
+//    public ElasticsearchOperations elasticsearchTemplate() {
+//        return new ElasticsearchRestTemplate(elasticsearchClient());
+//    }
+
+    @Bean(name = "restTemplate")
+    @Primary
+    public ElasticsearchRestTemplate restTemplate() {
+        return new ElasticsearchRestTemplate(elasticsearchClient());
     }
 }
