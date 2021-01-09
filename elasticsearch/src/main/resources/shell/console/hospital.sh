@@ -8,7 +8,7 @@ curl -X PUT "localhost:9200/hospital_index?pretty" \
 
 # 인덱스 확인
 curl -X GET "localhost:9200/hospital_index?pretty"
-curl -X GET "localhost:9200/hospital?pretty"
+#curl -X GET "localhost:9200/hospital?pretty"
 
 # 인덱스 검색
 #curl -X GET "localhost:9200/hospital_index/_search?pretty"

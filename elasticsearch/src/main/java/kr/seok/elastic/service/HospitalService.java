@@ -26,10 +26,14 @@ public class HospitalService {
         return hospitalRepository.findById(id).orElseGet(HospitalEsEntity::new);
     }
 
-    public List<HospitalEsEntity> findAll() {
-        Iterable<HospitalEsEntity> all = hospitalRepository.findAll(PageRequest.of(0, 1000));
+    public List<HospitalEsEntity> findAll(int page) {
+        Iterable<HospitalEsEntity> all = hospitalRepository.findAll(PageRequest.of(page, 1000));
         List<HospitalEsEntity> list = new ArrayList<>();
         all.forEach(list::add);
         return list;
+    }
+
+    public void search() {
+
     }
 }

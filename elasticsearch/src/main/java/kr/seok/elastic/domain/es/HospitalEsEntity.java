@@ -83,9 +83,9 @@ public class HospitalEsEntity {
     @Field(type = FieldType.Keyword)
     private String zipCode2;
 
-    @Field(type = FieldType.Double)
+    @GeoPointField
     private Double lon;
-    @Field(type = FieldType.Double)
+    @GeoPointField
     private Double lat;
 
     @Field(type = FieldType.Date, format = DateFormat.none)

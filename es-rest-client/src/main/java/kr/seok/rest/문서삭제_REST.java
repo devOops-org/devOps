@@ -24,9 +24,6 @@ public class 문서삭제_REST {
         //인덱스 명
         String INDEX_NAME = "movie_auto_java";
 
-        //타입 명
-        String TYPE_NAME="_doc";
-
         //문서 키값
         String _id = "6";
 
