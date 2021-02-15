@@ -62,27 +62,16 @@ public class 문서추가_BULK_Optimize_REST {
         };
         BulkProcessor bulkProcessor = BulkProcessor.builder(
                 (request, bulkListener) ->
-                        client.bulkAsync(request, RequestOptions.DEFAULT, bulkListener),
-                listener)
-                .build();
+                        client.bulkAsync(request, RequestOptions.DEFAULT, bulkListener), listener
+        ).build();
 
         BulkProcessor.Builder builder = BulkProcessor.builder(
                 (request, bulkListener) ->
                         client.bulkAsync(request, RequestOptions.DEFAULT, bulkListener),
                 listener);
-        builder.setBulkActions(500);
-        builder.setBulkSize(new ByteSizeValue(1L, ByteSizeUnit.MB));
-        builder.setConcurrentRequests(0);
-        builder.setFlushInterval(TimeValue.timeValueSeconds(10L));
-        builder.setBackoffPolicy(BackoffPolicy
-                .constantBackoff(TimeValue.timeValueSeconds(1L), 3));
 
-        //500개의 문서가 저장되면 Elasticsearch에 저장 요청한다.
-        builder.setBulkActions(3);
-        //1MB이상의 문서가 쌓이면 Elasticsearch에 저장 요청한다.
-        builder.setBulkSize(new ByteSizeValue(1L, ByteSizeUnit.MB));
-        //10초가 되면 문서를 Elasticsearch에 저장 요청한다.
-        builder.setFlushInterval(TimeValue.timeValueSeconds(10L));
+        // bulkProcessor 설정
+        extracted(builder);
 
         BulkRequest request = new BulkRequest(INDEX_NAME);
         String _id = "7";
@@ -92,12 +81,12 @@ public class 문서추가_BULK_Optimize_REST {
         _id = "9";
         IndexRequest three = new IndexRequest(INDEX_NAME).id(_id).source(XContentType.JSON, FIELD_NAME, "캡틴아메리카 시빌워");
 
-
         builder.build().add(one);
         builder.build().add(two);
         builder.build().add(three);
 
         BulkResponse bulkResponse = client.bulk(request, RequestOptions.DEFAULT);
+
         for (BulkItemResponse bulkItemResponse : bulkResponse) {
             DocWriteResponse itemResponse = bulkItemResponse.getResponse();
             switch (bulkItemResponse.getOpType()) {
@@ -118,6 +107,22 @@ public class 문서추가_BULK_Optimize_REST {
         boolean terminated = bulkProcessor.awaitClose(30L, TimeUnit.SECONDS);
 
         bulkProcessor.close();
+    }
+
+    private static void extracted(BulkProcessor.Builder builder) {
+        builder.setBulkActions(500);
+        builder.setBulkSize(new ByteSizeValue(1L, ByteSizeUnit.MB));
+        builder.setConcurrentRequests(0);
+        builder.setFlushInterval(TimeValue.timeValueSeconds(10L));
+        builder.setBackoffPolicy(BackoffPolicy
+                .constantBackoff(TimeValue.timeValueSeconds(1L), 3));
+
+        //500개의 문서가 저장되면 Elasticsearch에 저장 요청한다.
+        builder.setBulkActions(3);
+        //1MB이상의 문서가 쌓이면 Elasticsearch에 저장 요청한다.
+        builder.setBulkSize(new ByteSizeValue(1L, ByteSizeUnit.MB));
+        //10초가 되면 문서를 Elasticsearch에 저장 요청한다.
+        builder.setFlushInterval(TimeValue.timeValueSeconds(10L));
     }
 
     private static RestHighLevelClient getRestHighLevelClient() {

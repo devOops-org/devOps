@@ -124,9 +124,9 @@
       "latitude": {
         "type": "geo_point"
       },
-      "date": {
+      "docDate": {
         "type": "date",
-        "format": "yyyy-MM-dd HH:mm:ss.S||yyyy/MM/dd||epoch_millis"
+        "format": "YYYY-MM-DD HH:mm:ss"
       }
     }
   }

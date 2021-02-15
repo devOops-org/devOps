@@ -21,24 +21,24 @@ services:
     networks:
       - elastic
 
-#  kibana:
-#    # 키바나 이미지로 엘라스틱 서치와 호환되는 동일한 버전을 사용
-#    # https://www.docker.elastic.co/r/kibana
-#    image: docker.elastic.co/kibana/kibana:7.6.2
-#    # 키바나 컨테이너 명
-#    container_name: kibana
-#    # 환경설정 키바나는 서비스 이름과 포트로 컨테이너 엘라스틱서치에 연결한다.
-#    environment:
-#      ELASTICSEARCH_URL: http://elasticsearch:9200
-#      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
-#    # 키바나 기본 포트
-#    ports:
-#      - 5601:5601
-#    # 엘라스틱 서치 작동 후 키바나 서비스가 올라가도록 설정
-#    depends_on:
-#      - elasticsearch
-#    networks:
-#      - elastic
+  kibana:
+    # 키바나 이미지로 엘라스틱 서치와 호환되는 동일한 버전을 사용
+    # https://www.docker.elastic.co/r/kibana
+    image: docker.elastic.co/kibana/kibana:7.6.2
+    # 키바나 컨테이너 명
+    container_name: kibana
+    # 환경설정 키바나는 서비스 이름과 포트로 컨테이너 엘라스틱서치에 연결한다.
+    environment:
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
+    # 키바나 기본 포트
+    ports:
+      - 5601:5601
+    # 엘라스틱 서치 작동 후 키바나 서비스가 올라가도록 설정
+    depends_on:
+      - elasticsearch
+    networks:
+      - elastic
 
 volumes:
   data01:

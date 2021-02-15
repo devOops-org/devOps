@@ -8,6 +8,7 @@ import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.rest.RestStatus;
 
 import java.io.IOException;
@@ -37,14 +38,15 @@ public class 문서추가_REST {
         IndexRequest request = new IndexRequest(INDEX_NAME)
                 .id(_id);
 
-        request.source(jsonBuilder()
+        XContentBuilder sourceBuilder = jsonBuilder()
                 .startObject()
                     .field("movieCd", "20173732")
                     .field("movieNm", "살아남은 아이")
                     .field("movieNmEn", "Last Child")
                     .field("prdtYear", 1)
-                .endObject()
-        );
+                .endObject();
+
+        request.source(sourceBuilder);
 
         // 결과 조회
         try {
